@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+  <link href="/static/app.e4452a0b7c3c7e8011a3.css" rel="stylesheet"></head>
+  <body>
+    PROD:
+    <div id="app">{{ body | safe }}</div>
+
+    <script type="text/javascript">
+      window.__APPLICATION_STATE__ = '{{ store | safe }}'
+    </script>
+  <script type="text/javascript" src="/static/core.e4452a0b7c3c7e8011a3.js"></script><script type="text/javascript" src="/static/app.e4452a0b7c3c7e8011a3.js"></script></body>
+</html>

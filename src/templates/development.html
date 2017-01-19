@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <header>
+    <title>__DEV__</title>
+  </header>
+  <body>
+    <div id='app'></div>
+    <script type="text/javascript">
+      window.__APPLICATION_STATE__ = '{{ store | safe }}'
+    </script>
+
+    <script type="text/javascript" src='{{ jsBundle }}'></script>
+  </body>
+</html>
