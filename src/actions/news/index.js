@@ -21,6 +21,13 @@ export function loadNewsDetail (id) {
   }
 }
 
+export function loadNewsInfo (id) {
+  return async dispatch => {
+    const response = await agent(`http://localhost:4000/api/news/info/${id}`)
+    dispatch(_load_news_detail(id, response.body))
+  }
+}
+
 function _load_news(list) {
 
   return {
@@ -37,4 +44,3 @@ function _load_news_detail(id, data) {
     data
   }
 }
-

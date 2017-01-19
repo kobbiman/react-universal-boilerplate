@@ -2,21 +2,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import { loadNewsDetail } from '../../actions/news'
+import NewsInfo from './info'
 
 class NewsDetail extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
+      loading: false,
       id: this.props.router.params.id
     }
   }
 
   static fetchData (dispatch, params) {
-    return dispatch(loadNewsDetail(params.id))
-  }
-
-  componentWillMount() {
+    dispatch(loadNewsDetail(params.id))
+    return NewsInfo.fetchData(dispatch, params)
   }
 
   componentDidMount() {
@@ -24,7 +24,10 @@ class NewsDetail extends React.Component {
     const { id } = this.state
 
     if (news[id] == null || news[id].desc == null) {
-      NewsDetail.fetchData(dispatch, router.params)
+      this.setState({ loading: true })
+      NewsDetail.fetchData(dispatch, router.params).then(() => {
+        this.setState({ loading: false })
+      })
     }
   }
 
@@ -34,9 +37,18 @@ class NewsDetail extends React.Component {
 
     return (
       <div>
+
         <h1>{ item.title }</h1>
+
+        {
+          this.state.loading &&
+          <img src="/static/images/loading.gif" />
+        }
+
         <p>{ item.desc } </p>
         <a href={ item.link } target="blank">Read more ...</a>
+
+        <NewsInfo id={id} />
       </div>
     )
   }
