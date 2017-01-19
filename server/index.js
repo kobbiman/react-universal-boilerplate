@@ -20,18 +20,22 @@ const templatesDir = __DEV__ ?
 
 app.use(views(templatesDir, { map: { html: 'nunjucks' } }))
 
+const { entry, output, publicPath } = appConfig.compile
+
 if (__DEV__) {
 
   const webpackDevMiddleware = require('./util/webpack-dev').default
   const webpackHMRMiddleware = require('./util/webpack-hmr').default
   const compiler = webpack(webpackConfig)
 
-  app.use(webpackDevMiddleware(compiler, appConfig.compile.publicPath))
+  app.use(webpackDevMiddleware(compiler, publicPath))
   app.use(webpackHMRMiddleware(compiler))
-}
 
-// static files
-app.use(mount('/static', serve(appConfig.compile.output)))
+  app.use(mount(publicPath, serve(path.join(entry, publicPath))))
+}
+else {
+  app.use(mount(serve(path.join(output))))
+}
 
 // api
 app.use(mount('/api', require('./api/news')))
