@@ -56,7 +56,7 @@ router.get('/news', async (ctx, next) => {
 })
 
 router.get('/news/:id', async (ctx, next) => {
-  await fakeDelay(2000)
+  await fakeDelay(500)
 
   const news = data[ctx.params.id]
   ctx.body = {
@@ -67,7 +67,7 @@ router.get('/news/:id', async (ctx, next) => {
 })
 
 router.get('/news/info/:id', async (ctx, next) => {
-  await fakeDelay(4000)
+  await fakeDelay(500)
 
   const news = data[ctx.params.id]
   ctx.body = {
