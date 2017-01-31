@@ -41,8 +41,8 @@ webpackConfig.plugins.push(
   }),
   new CopyWebpackPlugin([
     {
-      from: path.join(appConfig.compile.entry, appConfig.compile.publicPath),
-      to: path.join(appConfig.compile.output, appConfig.compile.publicPath),
+      from: path.join(appConfig.compile.entry, appConfig.compile.publicDirName),
+      to: path.join(appConfig.compile.output, appConfig.compile.publicDirName),
     }
   ])
 )
