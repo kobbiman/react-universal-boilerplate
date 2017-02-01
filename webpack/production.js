@@ -7,8 +7,6 @@ import path from 'path'
 import webpackConfig from './base'
 import appConfig from '../config'
 
-webpackConfig.devtool = ''
-
 const postcss = function() {
   return [
     require('postcss-cssnext')({
@@ -18,6 +16,14 @@ const postcss = function() {
       ]
     })
   ]
+}
+
+webpackConfig.devtool = ''
+
+webpackConfig.performance = {
+  hints: 'warning',
+  maxAssetSize: 200 * 1024,
+  maxEntrypointSize: 300 * 1024
 }
 
 webpackConfig.entry = {
