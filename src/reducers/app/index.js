@@ -1,4 +1,4 @@
-import { types } from 'Actions/app'
+import { types } from '../../actions/app'
 
 const initialState = {
   status: null
