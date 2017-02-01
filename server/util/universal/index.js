@@ -29,9 +29,7 @@ export default async function (ctx) {
     try {
       await Promise.all(fetch(renderProps, store))
     }
-    catch(e) {
-
-    }
+    catch(e) { }
 
     if (process.env.NODE_ENV == 'production') {
       await ctx.render('index', {
@@ -45,20 +43,10 @@ export default async function (ctx) {
       })
     }
     else {
-      // await ctx.render('development', {
-      //   store: JSON.stringify({}),
-      //   jsBundle: `${config.compile.publicPath}/${config.compile.jsBundle}`
-      // })
-
       await ctx.render('development', {
-        title: 'App',
-        jsBundle: `${config.compile.publicPath}/${config.compile.jsBundle}`,
+        title: '_DEV_',
         store: xss(JSON.stringify(store.getState())),
-        body: renderToString(
-          <Provider store={ store }>
-            <RouterContext { ...renderProps } />
-          </Provider>
-        )
+        jsBundle: `${config.compile.publicPath}/${config.compile.jsBundle}`
       })
     }
   }
