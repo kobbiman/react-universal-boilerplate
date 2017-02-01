@@ -10,6 +10,16 @@ export default {
     filename: config.compile.jsBundle,
     publicPath: config.compile.publicPath
   },
+  resolve: {
+    extensions: [ '.js', '.json', '.css', '.scss' ],
+    modules: [
+      config.compile.entry,
+      'node_modules'
+    ],
+    alias: {
+      Actions: config.compile.entry + '/actions'
+    }
+  },
   plugins: [
     new webpack.DefinePlugin(config.globals)
   ],
