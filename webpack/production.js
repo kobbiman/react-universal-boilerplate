@@ -9,6 +9,17 @@ import appConfig from '../config'
 
 webpackConfig.devtool = ''
 
+const postcss = function() {
+  return [
+    require('postcss-cssnext')({
+      browsers: [
+        'last 10 versions',
+        '> 1%'
+      ]
+    })
+  ]
+}
+
 webpackConfig.entry = {
   app: [
     'babel-polyfill',
@@ -19,12 +30,16 @@ webpackConfig.entry = {
 
 webpackConfig.plugins.push(
   new webpack.optimize.UglifyJsPlugin({
-    compressor: {
-      warnings: false
-    }
+    minimize: true
   }),
-  new webpack.optimize.CommonsChunkPlugin('vendor', appConfig.compile.jsVendorBundle),
-  new ExtractTextPlugin(appConfig.compile.cssBundle, { allChunks: true }),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    filename: appConfig.compile.jsVendorBundle
+  }),
+  new ExtractTextPlugin({
+    filename: appConfig.compile.cssBundle,
+    allChunks: true
+  }),
   new ImageminPlugin({
     pngquant: {
       quality: '95-100'
@@ -33,7 +48,7 @@ webpackConfig.plugins.push(
   new HtmlWebpackPlugin({
     template: appConfig.compile.template,
     hash: false,
-    filename: 'index.html',
+    filename: 'app.html',
     inject: 'body',
     minify: {
       collapseWhitespace: false
@@ -47,16 +62,39 @@ webpackConfig.plugins.push(
   ])
 )
 
-webpackConfig.module.loaders.push(
+webpackConfig.module.rules.push(
   {
     test: /\.css/,
-    loader: ExtractTextPlugin.extract('style', 'css!postcss!sass'),
-    include: appConfig.compile.entry
+    include: appConfig.compile.entry,
+    use: ExtractTextPlugin.extract({
+      fallbackLoader: 'style-loader',
+      loader: [
+        { loader: 'css-loader' },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: postcss
+          }
+        }
+      ]
+    })
   },
   {
     test: /\.scss/,
-    loader: ExtractTextPlugin.extract('style', 'css!postcss'),
-    include: appConfig.compile.entry
+    include: appConfig.compile.entry,
+    use: ExtractTextPlugin.extract({
+      fallbackLoader: 'style-loader',
+      loader: [
+        { loader: 'css-loader' },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: postcss
+          }
+        },
+        { loader: 'sass-loader' }
+      ]
+    })
   }
 )
 

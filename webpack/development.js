@@ -2,10 +2,13 @@ import webpack from 'webpack'
 import webpackConfig from './base'
 import appConfig from '../config'
 
-webpackConfig.postcss.push(
-  require('postcss-browser-reporter')({}),
-  require('postcss-reporter')({})
-)
+const postcss = function() {
+  return [
+    require('postcss-cssnext')({}),
+    require('postcss-browser-reporter')({}),
+    require('postcss-reporter')({})
+  ]
+}
 
 webpackConfig.entry = [
   'babel-polyfill',
@@ -16,19 +19,38 @@ webpackConfig.entry = [
 
 webpackConfig.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin()
+  new webpack.NoEmitOnErrorsPlugin()
 )
 
-webpackConfig.module.loaders.push(
+webpackConfig.module.rules.push(
   {
     test: /\.css/,
-    loaders: [ 'style', 'css', 'postcss' ],
-    include: appConfig.compile.entry
+    include: appConfig.compile.entry,
+    use:[
+      'style-loader',
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: postcss
+        }
+      }
+    ]
   },
   {
     test: /\.scss/,
-    loaders: [ 'style', 'css', 'sass', 'postcss' ],
-    include: appConfig.compile.entry
+    include: appConfig.compile.entry,
+    use: [
+      'style-loader',
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: postcss
+        }
+      },
+      'sass-loader'
+    ]
   }
 )
 

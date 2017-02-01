@@ -11,18 +11,22 @@ export default {
     publicPath: config.compile.publicPath
   },
   plugins: [
-    new webpack.DefinePlugin(config.globals),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin()
+    new webpack.DefinePlugin(config.globals)
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         include: config.compile.entry,
-        query: {
+        options: {
           cacheDirectory: true,
+          babelrc: false,
+          presets: [
+            'react',
+            ['es2015', { modules: false }],
+            'stage-0'
+          ],
           env: {
             production: {
               presets: [ 'react-optimize' ]
@@ -44,44 +48,46 @@ export default {
       },
       {
         test: /\.woff(\?.*)?$/,
-        loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=application/font-woff'
+        use: [{
+          loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=application/font-woff'
+        }]
       },
       {
         test: /\.woff2(\?.*)?$/,
-        loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=application/font-woff2'
+        use: [{
+          loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=application/font-woff2'
+        }]
       },
       {
         test: /\.otf(\?.*)?$/,
-        loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=font/opentype'
+        use: [{
+          loader: 'file-loader?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=font/opentype'
+        }]
       },
       {
         test: /\.ttf(\?.*)?$/,
-        loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=application/octet-stream'
+        use: [{
+          loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=application/octet-stream'
+        }]
       },
       {
         test: /\.eot(\?.*)?$/,
-        loader: 'file?prefix=fonts/&name=[path][name].[ext]'
+        use: [{
+          loader: 'file-loader?prefix=fonts/&name=[path][name].[ext]'
+        }]
       },
       {
         test: /\.svg(\?.*)?$/,
-        loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=image/svg+xml'
+        use: [{
+          loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=32000&mimetype=image/svg+xml'
+        }]
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'url?limit=8192'
-      },
-      {
-        test: /\.json$/,
-        loader: 'json'
+        use: [{
+          loader: 'url-loader?limit=8192'
+        }]
       }
     ]
-  },
-  postcss: [
-    require('postcss-cssnext')({
-      browsers: [
-        'last 10 versions',
-        '> 1%'
-      ]
-    })
-  ]
+  }
 }
