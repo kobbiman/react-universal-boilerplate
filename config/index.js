@@ -1,4 +1,7 @@
+/* eslint-disable object-shorthand */
+
 const path = require('path')
+
 const env = process.env.NODE_ENV || 'development'
 const __DEV__ = env === 'development'
 
@@ -22,11 +25,11 @@ const config = {
     ]
   },
   globals: {
-    'process.env'  : {
-      'NODE_ENV' : JSON.stringify(env)
+    'process.env': {
+      NODE_ENV: JSON.stringify(env)
     },
     __DEV__: __DEV__,
-    NODE_ENV : env,
+    NODE_ENV: env,
     __DEBUG__: __DEV__,
     __PROD__: env === 'production'
   }
