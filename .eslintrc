@@ -15,10 +15,12 @@
     "jsx": true
   },
   "rules": {
-    "no-unused-vars": ["error", { "vars": "all", "args": "all" }],
+    "max-len": [1, 120, 2, {ignoreComments: true}],
+    "no-unused-vars": [1, {"vars": "local", "args": "none"}],
     "semi": ["error", "never"],
     "comma-dangle": ["error", "never"],
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true, "peerDependencies": false }],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "peerDependencies": false}],
+    "new-cap": ["error", { "capIsNew": false }],
     "no-underscore-dangle": "off",
     "react/jsx-filename-extension": "off",
     "react/forbid-prop-types": "off"
