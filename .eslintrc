@@ -17,14 +17,10 @@
   "rules": {
     "no-unused-vars": ["error", { "vars": "all", "args": "all" }],
     "semi": ["error", "never"],
-    "global-require": "off",
-    "no-use-before-define": "off",
+    "comma-dangle": ["error", "never"],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true, "peerDependencies": false }],
+    "no-underscore-dangle": "off",
     "react/jsx-filename-extension": "off",
-    "func-names": "off",
-    "import/no-unresolved": "off",
-    "comma-dangle": "off",
-    "react/prop-types": "off",
-    "no-bitwise": "off",
-    "no-restricted-syntax": "off"
+    "react/forbid-prop-types": "off"
   }
 }

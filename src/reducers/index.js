@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import { default as app } from './app'
-import { default as news } from './news'
+import app from './app'
+import news from './news'
 
 export default combineReducers({
   app,

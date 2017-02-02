@@ -4,12 +4,13 @@ import { loadNewsInfo } from '../../actions/news'
 
 class NewsInfo extends React.Component {
 
-  constructor(props) {
-    super(props)
+  static fetchData(dispatch, params) {
+    return dispatch(loadNewsInfo(params.id))
   }
 
-  static fetchData (dispatch, params) {
-    return dispatch(loadNewsInfo(params.id))
+  static propTypes = {
+    news: React.PropTypes.object.isRequired,
+    id: React.PropTypes.string.isRequired
   }
 
   componentWillMount() {

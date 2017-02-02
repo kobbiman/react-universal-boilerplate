@@ -6,6 +6,17 @@ import { loadNews } from '../../actions/news'
 
 class News extends React.Component {
 
+  static fetchData(dispatch) {
+    return dispatch(loadNews())
+  }
+
+  static propTypes = {
+    news: React.PropTypes.shape({
+      title: React.PropTypes.number
+    }).isRequired,
+    dispatch: React.PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -13,18 +24,17 @@ class News extends React.Component {
     }
   }
 
-  static fetchData (dispatch, params) {
-    return dispatch(loadNews())
-  }
-
   componentWillMount() {
   }
 
   componentDidMount() {
+    this.fetch()
+  }
+
+  fetch() {
     const { news, dispatch } = this.props
 
     if (_.size(news) <= 1) {
-
       this.setState({ loading: true })
 
       News.fetchData(dispatch).then(() => {
@@ -43,13 +53,11 @@ class News extends React.Component {
         }
 
         {
-          _.map(this.props.news, (news, key) => {
-            return (
-              <div key={`NEWS_${key}`} className="news-item">
-                <Link to={`/news/${key}`}>{ news.title }</Link>
-              </div>
-            )
-          })
+          _.map(this.props.news, (news, key) => (
+            <div key={`NEWS_${key}`} className="news-item">
+              <Link to={`/news/${key}`}>{ news.title }</Link>
+            </div>
+            ))
         }
       </div>
     )
