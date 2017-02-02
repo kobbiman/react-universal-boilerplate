@@ -45,7 +45,7 @@ class NewsDetail extends React.Component {
     const item = this.props.news[id]
 
     return (
-      <div>
+      <div className="news-detail">
 
         <h1>{ item.title }</h1>
 
