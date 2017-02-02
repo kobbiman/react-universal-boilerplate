@@ -1,4 +1,5 @@
 *.log
 *.lock
+*.yarn*
 node_modules
 dist
