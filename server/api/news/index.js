@@ -5,7 +5,7 @@ import _ from 'underscore'
 const app = new Koa()
 const router = new Router()
 
-const fakeDelay = (delay) => new Promise(res => setTimeout(res, delay))
+const fakeDelay = delay => new Promise(res => setTimeout(res, delay))
 
 const data = {
   1: {
@@ -45,17 +45,18 @@ const data = {
   }
 }
 
-router.get('/news', async (ctx, next) => {
-
+router.get('/news', async (ctx) => {
   await fakeDelay(1000)
 
   const list = {}
-  _.each(data, (news, id) => list[id] = { title: news.title })
+  _.each(data, (news, id) => {
+    list[id] = { title: news.title }
+  })
 
   ctx.body = list
 })
 
-router.get('/news/:id', async (ctx, next) => {
+router.get('/news/:id', async (ctx) => {
   await fakeDelay(500)
 
   const news = data[ctx.params.id]
@@ -66,7 +67,7 @@ router.get('/news/:id', async (ctx, next) => {
   }
 })
 
-router.get('/news/info/:id', async (ctx, next) => {
+router.get('/news/info/:id', async (ctx) => {
   await fakeDelay(500)
 
   const news = data[ctx.params.id]
