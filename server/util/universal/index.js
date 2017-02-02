@@ -42,7 +42,7 @@ export default async function (ctx) {
     }
 
     if (process.env.NODE_ENV === 'production') {
-      await ctx.render('index', {
+      await ctx.render('app', {
         title: 'App',
         store: xss(JSON.stringify(store.getState())),
         body: renderToString(
