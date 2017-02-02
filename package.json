@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint ./src && eslint ./config && eslint ./server",
     "dev": "NODE_ENV=development nodemon ./bin/server --ignore ./src --exec babel-node",
-    "build": "rimraf dist && NODE_ENV=production webpack -p --progress --colors --config ./webpack.config.babel.js",
+    "build": "npm run lint && rimraf dist && NODE_ENV=production webpack -p --progress --colors --config ./webpack.config.babel.js",
     "serve": "NODE_ENV=production babel-node ./bin/server"
   },
   "author": "",
